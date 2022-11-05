@@ -114,7 +114,7 @@ always @ (posedge clk) begin
 		RESET: begin
 			nxt_state = RED;
 			limit = 1; // It will start from red after one clock cycle if rst = 0
-        end
+        	end
 		default: begin
 			nxt_state = RED;
 			limit = 1; // It will start from red after one clock cycle if rst = 0
