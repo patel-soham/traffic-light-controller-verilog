@@ -25,6 +25,7 @@ tlc # (.FREQ(FREQ), .ADDR_WIDTH(ADDR_WIDTH), .ADDR_RED(ADDR_RED), .ADDR_YELLOW(A
 always #(time_period/2.0) clk = ~clk;
 
 initial begin
+	// Initializing variables and applying reset
 	clk = 0; 
 	time_period = (10**3)/FREQ; // Mhz to ns
 	rst = 1;
@@ -33,9 +34,11 @@ initial begin
 	data = 0;
     	$monitor("time = %0t secs state=%0d rst=%0d",$time/(10.0**12), state, rst);
 	repeat (4) @ (posedge clk);
-
+	
+	// Release reset
 	rst = 0;
-	load_register(3, 1, 5); 
+	// Configuring regsiters values and observing output 
+	load_register(3, 1, 5);  // Red-> 3s, Yellow-> 1s and Green-> 5s
 	repeat (100000) @ (posedge clk);
 	rst = 1;
 	repeat (100000) @ (posedge clk);
