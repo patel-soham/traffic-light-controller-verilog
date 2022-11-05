@@ -16,20 +16,20 @@ module tlc (clk, rst, addr, data, valid, ready, state);
 
 parameter FREQ = 0.001, // input clock frequency in MHz 
 
-		  ADDR_WIDTH = 3, //Min address bits required for 3 registers is 2. 
-		  DATA_WIDTH = 8, // Keep min data width to be 8 to program 3 registers with time delay value in seconds 
+	  ADDR_WIDTH = 3, //Min address bits required for 3 registers is 2. 
+	  DATA_WIDTH = 8, // Keep min data width to be 8 to program 3 registers with time delay value in seconds 
 		  
-		  // Internal addresses of each register
-		  // Each registers stores values in seconds that can be configured by Master
-		  ADDR_RED = 0, 
-		  ADDR_YELLOW = 1,
-		  ADDR_GREEN = 2,
-		  
-		  // States
-		  RESET = 2'b00,
-		  RED = 2'b01,
-		  YELLOW = 2'b10,
-		  GREEN = 2'b11;
+	  // Internal addresses of each register
+	  // Each registers stores values in seconds that can be configured by Master
+	  ADDR_RED = 0, 
+	  ADDR_YELLOW = 1,
+	  ADDR_GREEN = 2,
+	  
+	  // States
+	  RESET = 2'b00,
+	  RED = 2'b01,
+	  YELLOW = 2'b10,
+	  GREEN = 2'b11;
 
 input clk, rst, valid;
 input [ADDR_WIDTH-1 : 0] addr;
@@ -55,6 +55,7 @@ initial begin
 	limit = 1; // It will start from red after one clock cycle
 end
 
+// Register configuration logic
 always @ (posedge clk) begin
 	if (rst == 1) begin
 		state = RESET;
@@ -84,6 +85,7 @@ always @ (posedge clk) begin
 	end
 end
 
+// Time counting logic
 always @ (posedge clk) begin
 	if (counter == limit) begin
 		state = nxt_state;
@@ -94,6 +96,7 @@ always @ (posedge clk) begin
 	end
 end
 
+// FSM logic
 always @ (posedge clk) begin
 	case (state)
 		RED: begin
