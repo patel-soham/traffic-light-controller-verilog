@@ -4,12 +4,13 @@ module tb_tlc;
 
 parameter FREQ = 0.001, // input clock frequency in MHz 
 
-		  ADDR_WIDTH = 3, //Min address bits required for 3 registers is 2. 
-		  ADDR_RED = 0, 
-		  ADDR_YELLOW = 1,
-		  ADDR_GREEN = 2,
-
-		  DATA_WIDTH = 8; // Keep min data width to be 8 to program 3 registers with time delay value in seconds 
+	  // TLC internal register address
+	  ADDR_RED = 0, 
+	  ADDR_YELLOW = 1,
+	  ADDR_GREEN = 2,
+	
+	  ADDR_WIDTH = 3, //Min address bits required for 3 registers is 2. 
+	  DATA_WIDTH = 8; // Keep min data width to be 8 to program 3 registers with time delay value in seconds 
 		  
 reg clk, rst, valid;
 reg [ADDR_WIDTH-1 : 0] addr;
@@ -30,7 +31,7 @@ initial begin
 	valid = 0;
 	addr = 0;
 	data = 0;
-    $monitor("time = %0t secs state=%0d rst=%0d",$time/(10.0**12), state, rst);
+    	$monitor("time = %0t secs state=%0d rst=%0d",$time/(10.0**12), state, rst);
 	repeat (4) @ (posedge clk);
 
 	rst = 0;
